@@ -1,0 +1,111 @@
+-- 問題 1
+SELECT Name, BirthDate
+FROM Employees;
+
+-- 問題 2
+SELECT *
+FROM Products
+WHERE Price >= 1000;
+
+-- 問題 3
+SELECT Name, Height
+FROM Employees
+ORDER BY Height DESC;
+
+-- 問題 4
+SELECT Name
+FROM Customers
+WHERE PrefecturalID = 13;
+
+-- 問題 5
+SELECT EmployeeID, SUM(Amount) AS TotalAmount
+FROM Salary
+GROUP BY EmployeeID;
+
+-- 問題 6
+SELECT *
+FROM Employees
+WHERE BloodType = 'A';
+
+-- 問題 7
+SELECT *
+FROM Sales
+WHERE Quantity >= 10;
+
+-- 問題 8
+SELECT *
+FROM BelongTo
+WHERE EndDate IS NULL;
+
+-- 問題 9
+SELECT AVG(Amount) AS AverageAmount
+FROM Salary;
+
+-- 問題 10
+SELECT BloodType, COUNT(*) AS Count
+FROM Employees
+GROUP BY BloodType;
+
+-- 問題 11
+SELECT Products.Name, Sales.Quantity
+FROM Sales
+JOIN Products ON Sales.ProductID = Products.ProductID;
+
+-- 問題 12
+SELECT Employees.Name, COUNT(*) AS SalesCount
+FROM Sales
+JOIN Employees ON Sales.EmployeeID = Employees.EmployeeID
+GROUP BY Employees.Name;
+
+-- 問題 13
+SELECT Customers.Name, Prefecturals.Name AS Prefecture
+FROM Customers
+JOIN Prefecturals ON Customers.PrefecturalID = Prefecturals.PrefecturalID;
+
+-- 問題 14
+SELECT Employees.Name, Departments.Name AS Department
+FROM BelongTo
+JOIN Employees ON BelongTo.EmployeeID = Employees.EmployeeID
+JOIN Departments ON BelongTo.DepartmentID = Departments.DepartmentID
+WHERE BelongTo.EndDate IS NULL;
+
+-- 問題 15
+SELECT Categories.Name AS Category, COUNT(*) AS ProductCount
+FROM Products
+JOIN Categories ON Products.CategoryID = Categories.CategoryID
+GROUP BY Categories.Name;
+
+-- 問題 16
+SELECT Customers.Name AS Customer, Products.Name AS Product, Sales.Quantity, Sales.SaleDate
+FROM Sales
+JOIN Customers ON Sales.CustomerID = Customers.CustomerID
+JOIN Products ON Sales.ProductID = Products.ProductID;
+
+-- 問題 17
+SELECT Employees.Name, Departments.Name AS Department
+FROM BelongTo
+JOIN Employees ON BelongTo.EmployeeID = Employees.EmployeeID
+JOIN Departments ON BelongTo.DepartmentID = Departments.DepartmentID
+WHERE BelongTo.EndDate IS NULL
+  AND YEAR(Employees.JoinDate) = 2000;
+
+-- 問題 18
+SELECT Products.Name, SUM(Products.Price * Sales.Quantity) AS TotalSales
+FROM Sales
+JOIN Products ON Sales.ProductID = Products.ProductID
+GROUP BY Products.Name;
+
+-- 問題 19
+SELECT Employees.Name
+FROM BelongTo
+JOIN Employees ON BelongTo.EmployeeID = Employees.EmployeeID
+GROUP BY Employees.Name
+HAVING COUNT(DISTINCT BelongTo.DepartmentID) > 1;
+
+-- 問題 20
+SELECT *
+FROM Products
+WHERE Price = (
+  SELECT MAX(Price)
+  FROM Products
+);
